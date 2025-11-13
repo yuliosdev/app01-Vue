@@ -5,9 +5,11 @@ const clase = "bg-red";
 const idtext = "texto";
 const id = "parrafo";
 const isDisabled = true;
+
 // Reactividad en Vue3
 import { ref } from "vue";
 import { reactive } from "vue";
+import { computed } from "vue";
 
 const contador = ref(0);
 
@@ -48,6 +50,11 @@ function asisdec() {
   fiesta.asistentes--;
   console.log(fiesta.asistentes);
 }
+
+const limite = computed(() => {
+  return fiesta.asistentes >= fiesta.aforo ? "Aforo Completo" : "Aún hay cupo";
+});
+const pintar = ref(false);
 </script>
 
 <template>
@@ -73,21 +80,32 @@ function asisdec() {
     <p>
       Edad: {{ persona.edad >= 18 ? "Es mayor de Edad." : "Es menor de edad." }}
     </p>
+    <p></p>
     <button @click="agedec">-</button>
     <span class="contador">{{ persona.edad }}</span>
     <button @click="ageinc">+</button>
     <!-- nt139 -->
     <h2>Objeto Reactivo con reactive()</h2>
     <p>Lugar de la fiesta: {{ fiesta.sitio }}</p>
-    <p>
-      Número de Asistentes:
-      {{
-        fiesta.asistentes >= fiesta.aforo ? "Aforo Completo" : "Aún hay cupo"
-      }}
-    </p>
+    <p>Número de Asistentes: {{ limite }}</p>
     <button @click="asisdec">-</button>
     <span class="contador">{{ fiesta.asistentes }}</span>
     <button @click="asisinc">+</button>
+  </div>
+  <div>
+    <h2
+      :class="{
+        'bg-green': pintar,
+      }"
+    >
+      Renderizado Condicional
+    </h2>
+    <h3 :class="[pintar ? 'bg-red' : 'bg-green', 'text-yellow']">
+      Class con varias clases
+    </h3>
+    <button @click="pintar = !pintar">
+      {{ pintar ? "Sin Pintar" : "Pintar" }}
+    </button>
   </div>
 </template>
 
@@ -97,7 +115,11 @@ function asisdec() {
   color: white;
   padding: 10px;
 }
-
+.bg-green {
+  background-color: green;
+  color: white;
+  padding: 10px;
+}
 #texto {
   font-size: 20px;
   font-weight: bold;
@@ -107,6 +129,9 @@ function asisdec() {
   background-color: blue;
   color: white;
   padding: 10px;
+}
+.text-yellow {
+  color: yellow;
 }
 .contador {
   margin: 0 15px;
