@@ -55,6 +55,11 @@ const limite = computed(() => {
   return fiesta.asistentes >= fiesta.aforo ? "Aforo Completo" : "Aún hay cupo";
 });
 const pintar = ref(false);
+
+// <!-- Representación condicional -->
+const awesome = ref(true);
+const opc = ref("");
+const mostrar = ref(false);
 </script>
 
 <template>
@@ -106,6 +111,41 @@ const pintar = ref(false);
     <button @click="pintar = !pintar">
       {{ pintar ? "Sin Pintar" : "Pintar" }}
     </button>
+  </div>
+
+  <!-- Representación condicional -->
+  <div>
+    |
+    <h2>Representación Condicional</h2>
+    <div v-if="awesome">
+      <h3>Vue es asombroso!</h3>
+    </div>
+    <div v-else>
+      <h3>Vue no es asombroso!</h3>
+    </div>
+    <button @click="awesome = !awesome">
+      {{ awesome ? "No Like" : "Dar Like" }}
+    </button>
+  </div>
+  <div>
+    <h2>Selección con v-if / v-else-if / v-else</h2>
+    <button @click="opc = 'a'">A</button>
+    <button @click="opc = 'b'">B</button>
+    <button @click="opc = 'c'">C</button>
+    <p v-if="(tipo = 'a')">Opción seleccionada: {{ opc }}</p>
+    <p v-else-if="(tipo = 'b')">Opción seleccionada: {{ opc }}</p>
+    <p v-else-if="(tipo = 'c')">Opción seleccionada: {{ opc }}</p>
+    <p v-else>Ninguna opción seleccionada</p>
+
+    <button @click="mostrar = !mostrar">
+      Da click para {{ mostrar ? "quitar" : "mostrar" }} Mensaje
+    </button>
+    <template v-if="mostrar">
+      <h2>Eres Genial</h2>
+      <p>Sigue esforzandote por aprender</p>
+    </template>
+    <!-- v-show solo funciona con DIV y agrega css -->
+    <div v-show="mostrar">Muy pronto lo lograras</div>
   </div>
 </template>
 
