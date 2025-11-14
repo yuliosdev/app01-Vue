@@ -118,6 +118,28 @@ let lenguajes = [
 const enviar = () => {
   console.log("Formulario Enviado");
 };
+
+//Enlaces de entrada de formulario
+let paises = [];
+const pais = ref("");
+const save = () => {
+  if (pais.value && !paises.includes(pais.value)) {
+    paises.push(pais.value);
+    pais.value = "";
+  } else {
+    alert("El país ya está en la lista o el campo está vacío");
+  }
+};
+
+const number = ref(0);
+const playas = ref([]);
+const sexo = ref("");
+
+// Modificadores
+const cadena = ref("");
+const cadena1 = ref("");
+const num = ref(0);
+
 </script>
 
 <template>
@@ -263,6 +285,104 @@ const enviar = () => {
       />
       <button type="submit">Enviar</button>
     </form>
+  </div>
+  <div>
+    <h2>Enlace de Entrada de Formulario</h2>
+    <form @submit.prevent="save">
+      <input
+        type="text"
+        v-model="pais"
+        placeholder="Escribe el nombre de un país"
+      />
+      <button>Agregar País</button>
+    </form>
+    <p v-if="paises.length">Países :</p>
+    <ul>
+      <li v-for="(pais, index) in paises" :key="index">
+        {{ index }} - {{ pais }}
+      </li>
+    </ul>
+  </div>
+  <div>
+    <h2>Seleciones un Número</h2>
+    <div>
+      <label>
+        <input type="radio" v-model="number" value="1" />
+        Uno
+      </label>
+    </div>
+    <div>
+      <label>
+        <input type="radio" v-model="number" value="2" />
+        Dos
+      </label>
+    </div>
+    <div>
+      <label>
+        <input type="radio" v-model="number" value="3" />
+        Tres
+      </label>
+    </div>
+    <p>Número seleccionado: {{ number }}</p>
+  </div>
+  <div>
+    <h2>Seleccionas tus playa favorita</h2>
+    <div>
+      <label>
+        <input type="checkbox" v-model="playas" value="Copacabana" />
+        Copacabana
+      </label>
+    </div>
+    <div>
+      <label>
+        <input type="checkbox" v-model="playas" value="Ipanema" />
+        Ipanema
+      </label>
+    </div>
+    <div>
+      <label>
+        <input type="checkbox" v-model="playas" value="Mancora" />
+        Waikiki
+      </label>
+    </div>
+    <p>Playa favorita: {{ playas }}</p>
+  </div>
+  <div>
+    <h2>Selecciona tu Sexo</h2>
+    <div>
+      <select v-model="sexo">
+        <option value="">Seleccione una Opción</option>
+        <option value="Masculino">Masculino</option>
+        <option value="Femenino">Femenino</option>
+        <option value="Otro">Otro</option>
+      </select>
+    </div>
+    <p>Sexo seleccionado: {{ sexo }}</p>
+  </div>
+  <div>
+    <h2>Modificadores de Entrada</h2>
+    <input
+      type="text"
+      v-model.lazy="cadena"
+      placeholder="Escribe algo (lazy)"
+    />
+    <p>Cadena ingresada: "{{ cadena }}"</p>
+    <input
+      type="text"
+      v-model.trim="cadena1"
+      placeholder="Escribe algo (trim)"
+    />
+    <p>Cadena ingresada: "{{ cadena1 }}"</p>
+    <!-- se especifica v-model.numer para convertir la entrada en número -->
+    <input
+      type="text"
+      v-model.number="num"
+      placeholder="Escribe un número (number)"
+    />
+    <button @click="number = num * 2">
+      calcular x 2
+    </button>
+    <p>Número ingresado: {{ number }}</p>
   </div>
 </template>
 
