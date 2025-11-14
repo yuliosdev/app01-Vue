@@ -60,6 +60,64 @@ const pintar = ref(false);
 const awesome = ref(true);
 const opc = ref("");
 const mostrar = ref(false);
+
+// Representación de listas
+let users = ["Yulios", "Ana", "Luis", "Marta", "Alisson", "Kristell"];
+let backend = [
+  {
+    id: 1,
+    name: "Node.js",
+  },
+  {
+    id: 2,
+    name: "Django",
+  },
+  {
+    id: 3,
+    name: "Laravel",
+  },
+];
+let frontend = [
+  {
+    id: 1,
+    name: "Vue",
+  },
+  {
+    id: 2,
+    name: "React",
+  },
+  {
+    id: 3,
+    name: "Angular",
+  },
+];
+let lenguajes = [
+  {
+    id: 1,
+    name: "JavaScript",
+    active: true,
+  },
+  {
+    id: 2,
+    name: "Python",
+    active: true,
+  },
+  {
+    id: 3,
+    name: "Pascal",
+    active: false,
+  },
+  {
+    id: 4,
+    name: "Visual foxpro",
+    active: true,
+  },
+];
+
+// Manejo de Eventos
+const enviar = () => {
+  console.log("Formulario Enviado");
+};
 </script>
 
 <template>
@@ -146,6 +204,65 @@ const mostrar = ref(false);
     </template>
     <!-- v-show solo funciona con DIV y agrega css -->
     <div v-show="mostrar">Muy pronto lo lograras</div>
+  </div>
+
+  <div>
+    <h2>Representación de Listas</h2>
+    <ol>
+      <li v-for="user in users">{{ user }}</li>
+    </ol>
+    <ul>
+      <li v-for="(user, index) in users" :key="index">
+        {{ index + 1 }} - {{ user }}
+      </li>
+    </ul>
+    <dl>
+      <dt>Backend</dt>
+      <dd v-for="{ id, name } in backend">{{ id }} . {{ name }}</dd>
+      <dt>frontend</dt>
+      <dd v-for="ft in frontend">{{ ft.id }} - {{ ft.name }}</dd>
+    </dl>
+    <h3>Lenguajes de Programación</h3>
+    <template v-for="lang in lenguajes" :key="lang.id">
+      <li v-if="lang.active">{{ lang.id }} - {{ lang.name }}</li>
+    </template>
+  </div>
+
+  <!-- Manejo de eventos -->
+  <div>
+    <div>
+      <h2>Manejo de Eventos</h2>
+      <button @click="console.log('Hola desde Vue!')">Mostrar Alerta</button>
+      <input
+        type="text"
+        placeholder="Escribe tu nombre"
+        @input="console.log($event.target.value)"
+      />
+    </div>
+    <div @click="console.log('Hiciste Click en el DIV')">
+      <p>Control de Eventos</p>
+      <button @click.stop="console.log('Hiciste click en el botón')">
+        Haz Click Aquí
+      </button>
+    </div>
+  </div>
+  <div>
+    <h2>Envio de Formularios</h2>
+    <form @submit.prevent="enviar">
+      <input
+        type="text"
+        @keyup="console.log('haz presionado una tecla')"
+        placeholder="Nombre"
+        required
+      />
+      <input
+        type="email"
+        @keyup.enter="console.log('haz presionado enter')"
+        placeholder="Correo Electrónico"
+        required
+      />
+      <button type="submit">Enviar</button>
+    </form>
   </div>
 </template>
 
